@@ -3,5 +3,6 @@
 
     <string name="hello">Hello World, startingPoint!</string>
     <string name="app_name">MealTime</string>
+    <string name="search">Search</string>
 
 </resources>
