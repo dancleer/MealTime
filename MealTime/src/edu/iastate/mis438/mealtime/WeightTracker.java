@@ -1,5 +1,16 @@
 package edu.iastate.mis438.mealtime;
 
-public class WeightTracker {
+import android.app.Activity;
+import android.os.Bundle;
+
+public class WeightTracker extends Activity{
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		//requestWindowFeature(Window.FEATURE_CUSTOM_TITLE); 
+        setContentView(R.layout.weighttracker);
+	}
 
 }

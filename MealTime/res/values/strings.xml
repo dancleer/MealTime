@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, startingPoint!</string>
+    <string name="hello">Welcome to MealTime!</string>
     <string name="app_name">MealTime</string>
     <string name="search">Search</string>
+    <string name="foodHistoryString">Food History</string>
+    <string name="weightTrackerString">Weight Tracker</string>
+    <string name="recipesString">Recipes</string>
+    <string name="loginRegisterString">Login/Register</string>
+    <string name="aboutString">About</string>
 
 </resources>
