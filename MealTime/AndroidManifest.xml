@@ -9,15 +9,83 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
+        
+        
+        
         <activity
-            android:name=".startingPoint"
-            android:label="@string/app_name" >
+            android:name=".Splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".startingPoint"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.STARTINGPOINT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".About"
+                  android:label="@string/aboutString">
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.ABOUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+   		</activity>
+   		
+        <activity android:name=".FoodHistory"
+                  android:label="@string/foodHistoryString">
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.FOODHISTORY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+   		</activity>
+   		
+        <activity android:name=".LoginRegister"
+                  android:label="@string/loginRegisterString">
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.LOGINREGISTER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+   		</activity>
+   		
+        <activity android:name=".Recipes"
+                  android:label="@string/recipesString">
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.RECIPES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+   		</activity>
+   		
+        <activity android:name=".Search"
+                  android:label="@string/search">
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+   		</activity>
+   		
+        <activity android:name=".WeightTracker"
+                  android:label="@string/weightTrackerString">
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.WEIGHTTRACKER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+   		</activity>
+        
+        
     </application>
 
 </manifest>
