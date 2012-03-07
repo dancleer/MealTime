@@ -1,14 +1,10 @@
 package edu.iastate.mis438.mealtime;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
 //I edited this directly from google code, not from eclipse. <-- Derik
 // Did we want a list view for this first prototype or actual buttons? 
 //***This is to create a listview on the home screen. We would still need

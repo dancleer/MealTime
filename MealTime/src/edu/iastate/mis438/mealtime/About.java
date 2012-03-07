@@ -2,7 +2,6 @@ package edu.iastate.mis438.mealtime;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Window;
 
 public class About extends Activity{
 
