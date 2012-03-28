@@ -30,8 +30,16 @@
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
+
                     <TextView
-                        android:text="Breakfast"
+                        android:id="@+id/tvTest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Large Text"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <TextView
+                        android:text=""
                         android:layout_width="match_parent"
                     	android:layout_height="match_parent" />
                 </LinearLayout>
@@ -41,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
                     <TextView
-                        android:text="Lunch"
+                        android:text=""
                         android:layout_width="match_parent"
                     	android:layout_height="match_parent" />
                 </LinearLayout>
@@ -51,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
                     <TextView
-                        android:text="Dinner"
+                        android:text=""
                         android:layout_width="match_parent"
                     	android:layout_height="match_parent" />
                 </LinearLayout>

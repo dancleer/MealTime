@@ -9,5 +9,6 @@
     <string name="recipesString">Recipes</string>
     <string name="loginRegisterString">Login/Register</string>
     <string name="aboutString">About</string>
+    <string-array name="searcharray"></string-array>
 
 </resources>
