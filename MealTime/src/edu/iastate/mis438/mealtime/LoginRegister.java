@@ -1,9 +1,7 @@
 package edu.iastate.mis438.mealtime;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
@@ -27,10 +25,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
-import edu.iastate.mis438.mealtime.LoginRegister.CreateToken;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,67 +37,81 @@ import android.widget.TextView;
 
 public class LoginRegister extends Activity implements OnClickListener{
 
-	FileOutputStream fos;
-	String Filename = "TokenData.txt";
-	File f;
 	TextView tv;
 	Button b;
-	
+
 	ArrayList<String> tokenNSecret = new ArrayList<String>();
-	
+
 	private static String key = "9a6ae1fceea24f2894fba9311bfe20db";
 	private static String secret = "549aeee4d7ec46198bd88e89986b38a1";
 	private static final String HMAC_SHA1 = "HmacSHA1";
 	private static final String ENC = "UTF-8";
 	private static Base64 base64 = new Base64();
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        b = (Button)findViewById(R.id.bGetStarted);  
-        b.setOnClickListener(this);
+		setContentView(R.layout.login);
+		b = (Button)findViewById(R.id.bGetStarted);  
+		b.setOnClickListener(this);
 	}
-	
-	
+
+
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-			if(prefs.getBoolean("firstTime", true)) {
-				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean("firstTime", false);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		if(prefs.getBoolean("firstTime", true)) {
+			SharedPreferences.Editor editor = prefs.edit();
 
-			    editor.commit();
-				
-			    CreateToken task = new CreateToken();
+			tv.setText("here we go");
+			try {
+				CreateToken task = new CreateToken();
 				task.execute();
-	        }else{
-	        	b.setEnabled(false);
-	        	tv = (TextView)findViewById(R.id.tvLoginMessage);
-	        	tv.setText("You've already started!");
-				
-	        }
 
+
+				editor.putBoolean("firstTime", true);
+				editor.putString("token", task.getToken());
+				editor.putString("tokenSecret", task.getTokenSecret());
+				editor.commit();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				tv.setText("error at commit");
+			}
+
+
+			tv.setText("Thank you!");
+		}else{
+			b.setEnabled(false);
+			tv = (TextView)findViewById(R.id.tvLoginMessage);
+			tv.setText("You've already started!");
+		}
 	}
 
+	public String getToken(){
+		return tokenNSecret.get(0);
+	}
 
-	public class CreateToken extends AsyncTask<String, Void, String[]>{
+	public String getSecret(){
+		return tokenNSecret.get(1);
+	}
+
+	public class CreateToken extends AsyncTask<Void, Void, String[]>{
 
 		@Override
-		protected String[] doInBackground(String... params) {
-			String[] query = params;
-			String searchTerm = query[0];
+		protected String[] doInBackground(Void... params) {
+			//			Void[] query = params;
+			//			Void searchTerm = query[0];
 			try{
 				List<NameValuePair> qparams = new ArrayList<NameValuePair>();
 				// These params should ordered in key
 
-		        qparams.add(new BasicNameValuePair("method", "profile.create"));
-		        qparams.add(new BasicNameValuePair("oauth_consumer_key", key));
-		        qparams.add(new BasicNameValuePair("oauth_nonce", "" + (int) (Math.random() * 100000000)));
-		        qparams.add(new BasicNameValuePair("oauth_signature_method", "HMAC-SHA1"));
-		        qparams.add(new BasicNameValuePair("oauth_timestamp", "" + (System.currentTimeMillis())));
-		        qparams.add(new BasicNameValuePair("oauth_version", "1.0"));
+				qparams.add(new BasicNameValuePair("method", "profile.create"));
+				qparams.add(new BasicNameValuePair("oauth_consumer_key", key));
+				qparams.add(new BasicNameValuePair("oauth_nonce", "" + (int) (Math.random() * 100000000)));
+				qparams.add(new BasicNameValuePair("oauth_signature_method", "HMAC-SHA1"));
+				qparams.add(new BasicNameValuePair("oauth_timestamp", "" + (System.currentTimeMillis())));
+				qparams.add(new BasicNameValuePair("oauth_version", "1.0"));
 
 				// generate the oauth_signature
 				String signature = getSignature(URLEncoder.encode(
@@ -126,10 +135,10 @@ public class LoginRegister extends Activity implements OnClickListener{
 				String[] information = new String[2];
 				information[0] = handler.getTokenInformation();
 				information[1] = handler.getTokenSecretInformation();
-				for(int i = 0; i < information.length; i++){
+			    for(int i = 0; i < information.length; i++){
 					tokenNSecret.add(information[i]);
 				}
-				
+
 				return information;
 			}catch (Exception e){
 				tv.setText("error");
@@ -140,11 +149,15 @@ public class LoginRegister extends Activity implements OnClickListener{
 
 //		@Override
 //		protected void onPostExecute(String[] result) {
-//			SharedPreferences prefs1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//			SharedPreferences prefs1 = PreferenceManager.getDefaultSharedPreferences(LoginRegister.this);
 //			SharedPreferences.Editor editor = prefs1.edit();
 //			editor.putString("token", tokenNSecret.get(0));
 //			editor.putString("tokenSecret", tokenNSecret.get(1));
-//		    editor.commit();
+//			editor.commit();
+//			tokenNSecret.set(0, result[0]);
+//			tokenNSecret.set(1, result[1]);
+//
+//
 //		}
 
 		private String getSignature(String url, String params)
@@ -161,7 +174,7 @@ public class LoginRegister extends Activity implements OnClickListener{
 			base.append(params);
 			// yea, don't ask me why, it is needed to append a "&" to the end of
 			// secret key.
-			byte[] keyBytes = (secret + "&" + tokenNSecret.get(1)).getBytes(ENC);
+			byte[] keyBytes = (secret + "&").getBytes(ENC);
 
 			SecretKey key = new SecretKeySpec(keyBytes, HMAC_SHA1);
 
@@ -172,11 +185,11 @@ public class LoginRegister extends Activity implements OnClickListener{
 			return new String(base64.encode(mac.doFinal(base.toString().getBytes(
 					ENC))), ENC).trim();
 		}
-		
+
 		protected String getToken(){		
 			return tokenNSecret.get(0);
 		}
-		
+
 		protected String getTokenSecret(){
 			return tokenNSecret.get(1);
 		}
