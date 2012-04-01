@@ -78,6 +78,15 @@
             </intent-filter>
    		</activity>
    		
+                <activity android:name=".SearchDetails"
+                  android:label="@string/search">
+            <intent-filter>
+                <action android:name="edu.iastate.mis438.mealtime.SEARCHDETAILS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+   		</activity>
+   		
         <activity android:name=".WeightTracker"
                   android:label="@string/weightTrackerString">
             <intent-filter>
