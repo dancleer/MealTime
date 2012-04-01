@@ -60,27 +60,26 @@ public class LoginRegister extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		if(prefs.getBoolean("firstTime", true)) {
 			SharedPreferences.Editor editor = prefs.edit();
 
-			tv.setText("here we go");
 			try {
 				CreateToken task = new CreateToken();
-				task.execute();
-
-
+				task.execute("");
 				editor.putBoolean("firstTime", true);
 				editor.putString("token", task.getToken());
 				editor.putString("tokenSecret", task.getTokenSecret());
 				editor.commit();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				tv.setText("error at commit");
+				e.printStackTrace();
 			}
 
+			tv = (TextView)findViewById(R.id.tvLoginMessage);
 
 			tv.setText("Thank you!");
+			b.setEnabled(false);
 		}else{
 			b.setEnabled(false);
 			tv = (TextView)findViewById(R.id.tvLoginMessage);
@@ -96,10 +95,10 @@ public class LoginRegister extends Activity implements OnClickListener{
 		return tokenNSecret.get(1);
 	}
 
-	public class CreateToken extends AsyncTask<Void, Void, String[]>{
+	public class CreateToken extends AsyncTask<String, Void, String[]>{
 
 		@Override
-		protected String[] doInBackground(Void... params) {
+		protected String[] doInBackground(String... params) {
 			//			Void[] query = params;
 			//			Void searchTerm = query[0];
 			try{
@@ -135,10 +134,6 @@ public class LoginRegister extends Activity implements OnClickListener{
 				String[] information = new String[2];
 				information[0] = handler.getTokenInformation();
 				information[1] = handler.getTokenSecretInformation();
-			    for(int i = 0; i < information.length; i++){
-					tokenNSecret.add(information[i]);
-				}
-
 				return information;
 			}catch (Exception e){
 				tv.setText("error");
@@ -147,18 +142,17 @@ public class LoginRegister extends Activity implements OnClickListener{
 			return null;
 		}
 
-//		@Override
-//		protected void onPostExecute(String[] result) {
+		@Override
+		protected void onPostExecute(String[] result) {
 //			SharedPreferences prefs1 = PreferenceManager.getDefaultSharedPreferences(LoginRegister.this);
 //			SharedPreferences.Editor editor = prefs1.edit();
 //			editor.putString("token", tokenNSecret.get(0));
 //			editor.putString("tokenSecret", tokenNSecret.get(1));
 //			editor.commit();
-//			tokenNSecret.set(0, result[0]);
-//			tokenNSecret.set(1, result[1]);
-//
-//
-//		}
+			tokenNSecret.add(result[0]);
+			tokenNSecret.add(result[1]);
+
+		}
 
 		private String getSignature(String url, String params)
 				throws UnsupportedEncodingException, NoSuchAlgorithmException,
