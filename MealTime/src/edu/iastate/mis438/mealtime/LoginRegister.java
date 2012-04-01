@@ -1,7 +1,5 @@
 package edu.iastate.mis438.mealtime;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
@@ -68,18 +66,20 @@ public class LoginRegister extends Activity implements OnClickListener{
 			try {
 				CreateToken task = new CreateToken();
 				task.execute("");
-				editor.putBoolean("firstTime", true);
+				editor.putBoolean("firstTime", false);
 				editor.putString("token", task.getToken());
 				editor.putString("tokenSecret", task.getTokenSecret());
 				editor.commit();
+				
+
+				tv = (TextView)findViewById(R.id.tvLoginMessage);
+
+				tv.setText("Thank you!  You can now start tracking and maintaining a healty lifestyle with MealTime!");
+				b.setEnabled(false);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			tv = (TextView)findViewById(R.id.tvLoginMessage);
-
-			tv.setText("Thank you!");
-			b.setEnabled(false);
+			
 		}else{
 			b.setEnabled(false);
 			tv = (TextView)findViewById(R.id.tvLoginMessage);
@@ -99,11 +99,9 @@ public class LoginRegister extends Activity implements OnClickListener{
 
 		@Override
 		protected String[] doInBackground(String... params) {
-			//			Void[] query = params;
-			//			Void searchTerm = query[0];
 			try{
 				List<NameValuePair> qparams = new ArrayList<NameValuePair>();
-				// These params should ordered in key
+				// These params should be ordered alphabetically
 
 				qparams.add(new BasicNameValuePair("method", "profile.create"));
 				qparams.add(new BasicNameValuePair("oauth_consumer_key", key));
@@ -138,20 +136,13 @@ public class LoginRegister extends Activity implements OnClickListener{
 			}catch (Exception e){
 				tv.setText("error");
 			}
-
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(String[] result) {
-//			SharedPreferences prefs1 = PreferenceManager.getDefaultSharedPreferences(LoginRegister.this);
-//			SharedPreferences.Editor editor = prefs1.edit();
-//			editor.putString("token", tokenNSecret.get(0));
-//			editor.putString("tokenSecret", tokenNSecret.get(1));
-//			editor.commit();
 			tokenNSecret.add(result[0]);
 			tokenNSecret.add(result[1]);
-
 		}
 
 		private String getSignature(String url, String params)
