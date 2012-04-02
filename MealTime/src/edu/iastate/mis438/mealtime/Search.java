@@ -106,6 +106,8 @@ public class Search extends Activity implements OnClickListener{
 					SearchLookupTask task = new SearchLookupTask();
 					task.execute(query.getText().toString());
 				}
+				//do nothing
+				
 				//            else
 				//				pn stays the same
 				//			    and does not do another search        	  
