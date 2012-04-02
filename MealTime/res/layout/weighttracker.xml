@@ -8,11 +8,11 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current Weight"
+        android:text="Current Weight:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/etCurrentWeight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number" >
@@ -24,26 +24,39 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Goal Weight"
+        android:text="Goal Weight:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etGoalWeight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Large Text"
+        android:text="Height in Centimeters:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/etHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/bSetWeightTracker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set" />
+
+    <TextView
+        android:id="@+id/tvWeightReport"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_weight="0.84"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>
