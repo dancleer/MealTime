@@ -71,6 +71,7 @@ public class Search extends Activity implements OnClickListener{
 		setContentView(R.layout.search);
 		Button b = (Button)findViewById(R.id.bSearchGo);
 		Button next = (Button)findViewById(R.id.bNext);
+		Button previous = (Button)findViewById(R.id.bPrevious);
 		tv = (TextView)findViewById(R.id.tvSearch);
 		tv1 = (TextView)findViewById(R.id.tvSearch1);
 		tv2 = (TextView)findViewById(R.id.tvSearch2);
@@ -100,6 +101,21 @@ public class Search extends Activity implements OnClickListener{
 //				startActivity(tent);
 				
 			}
+		});
+		previous.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v){
+			int pn = Integer.parseInt(pageNumber);
+			if (pn > 0){
+				pn--;
+				SearchLookupTask task = new SearchLookupTask();
+				task.execute(query.getText().toString());
+			}
+//            else
+//				pn stays the same
+//			    and does not do another search        	  
+				pageNumber = Integer.toString(pn);
+			}
+			
 		});
 		tv1.setOnClickListener(new View.OnClickListener() {
 
