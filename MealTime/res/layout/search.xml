@@ -98,5 +98,14 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="45dp"
         android:text="Next" />
+
+    <Button
+        android:id="@+id/bPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bNext"
+        android:layout_alignBottom="@+id/bNext"
+        android:layout_toRightOf="@+id/tvSearch5"
+        android:text="Previous" />
 
 </RelativeLayout>
