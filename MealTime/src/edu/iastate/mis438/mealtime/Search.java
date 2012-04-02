@@ -1,6 +1,5 @@
 package edu.iastate.mis438.mealtime;
 
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
@@ -17,14 +16,9 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -104,18 +98,20 @@ public class Search extends Activity implements OnClickListener{
 		});
 		previous.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v){
-			int pn = Integer.parseInt(pageNumber);
-			if (pn > 0){
-				pn--;
-				SearchLookupTask task = new SearchLookupTask();
-				task.execute(query.getText().toString());
+				int pn = Integer.parseInt(pageNumber);
+				if (pn > 0){
+					pn--;
+					//needed to update the pageNumber before the call to task.
+					pageNumber = Integer.toString(pn);
+					SearchLookupTask task = new SearchLookupTask();
+					task.execute(query.getText().toString());
+				}
+				//            else
+				//				pn stays the same
+				//			    and does not do another search        	  
+				//pageNumber = Integer.toString(pn);
 			}
-//            else
-//				pn stays the same
-//			    and does not do another search        	  
-				pageNumber = Integer.toString(pn);
-			}
-			
+
 		});
 		tv1.setOnClickListener(new View.OnClickListener() {
 
