@@ -52,7 +52,7 @@ public class WeightTracker extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.weighttracker);
+		setContentView(R.layout.weighttracker);
 //		b = (Button)findViewById(R.id.bSetWeightTracker); 
 //		current = (EditText)findViewById(R.id.etCurrentWeight);
 //		goal = (EditText)findViewById(R.id.etGoalWeight);
@@ -61,14 +61,14 @@ public class WeightTracker extends Activity implements OnClickListener{
 		
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		if(prefs.getBoolean("firstTime", true)) {
-			setContentView(R.layout.weighttracker);
+			//setContentView(R.layout.weighttracker);
 			tv = (TextView)findViewById(R.id.tvWeightReport);
 			tv.setText("Please visit the login page to get started!");
 			b.setEnabled(false);
 		}
 		else if(prefs.getBoolean("weightFirstTime", true)){
 
-			setContentView(R.layout.weighttracker);
+			//setContentView(R.layout.weighttracker);
 			b = (Button)findViewById(R.id.bSetWeightTracker); 
 			current = (EditText)findViewById(R.id.etCurrentWeight);
 			goal = (EditText)findViewById(R.id.etGoalWeight);
@@ -88,7 +88,7 @@ public class WeightTracker extends Activity implements OnClickListener{
 					tSecret = pass[4];
 					task.execute(pass);
 					SharedPreferences.Editor editor = prefs.edit();
-					editor.putBoolean("weightFirstTime", true);
+					editor.putBoolean("weightFirstTime", false);
 					editor.commit();
 				}
 			});
@@ -104,16 +104,11 @@ public class WeightTracker extends Activity implements OnClickListener{
 					pass[0] = current.getText().toString();
 					pass[1] = prefs.getString("token", null);
 					pass[2] = prefs.getString("tokenSecret", null);
-					tSecret = pass[3];
+					tSecret = pass[2];
 					task.execute(pass);
 				}
 			});
 		}
-	}
-
-
-	public void onClick(View v) {
-		
 	}
 
 	public class CreateWeight extends AsyncTask<String[], Void, String[]>{
@@ -158,15 +153,9 @@ public class WeightTracker extends Activity implements OnClickListener{
 				information[0] = handler.getCurrentWeightInformation();
 				return information;
 			}catch (Exception e){
-				tv.setText("error");
+				e.printStackTrace();
 			}
 			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String[] result) {
-			weight.add(result[0]);
-			weight.add(result[1]);
 		}
 
 		private String getSignature(String url, String params)
@@ -244,15 +233,9 @@ public class WeightTracker extends Activity implements OnClickListener{
 				information[0] = handler.getCurrentWeightInformation();
 				return information;
 			}catch (Exception e){
-				tv.setText("error");
+				e.printStackTrace();
 			}
 			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String[] result) {
-			weight.add(result[0]);
-			weight.add(result[1]);
 		}
 
 		private String getSignature(String url, String params)
@@ -288,5 +271,10 @@ public class WeightTracker extends Activity implements OnClickListener{
 		protected String getGoalWeight(){
 			return weight.get(1);
 		}
+	}
+
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 }
