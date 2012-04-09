@@ -36,7 +36,7 @@ import android.widget.TextView;
 
 public class WeightTracker extends Activity implements OnClickListener{
 
-	TextView tv;
+	TextView tv, tv2;
 	Button b;
 	EditText current, goal, height;
 	String tSecret;
@@ -53,29 +53,19 @@ public class WeightTracker extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weighttracker);
-//		b = (Button)findViewById(R.id.bSetWeightTracker); 
-//		current = (EditText)findViewById(R.id.etCurrentWeight);
-//		goal = (EditText)findViewById(R.id.etGoalWeight);
-//		height = (EditText)findViewById(R.id.etHeight);
-//		b.setOnClickListener(this);
 		
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		if(prefs.getBoolean("firstTime", true)) {
-			//setContentView(R.layout.weighttracker);
 			tv = (TextView)findViewById(R.id.tvWeightReport);
 			tv.setText("Please visit the login page to get started!");
 			b.setEnabled(false);
 		}
 		else if(prefs.getBoolean("weightFirstTime", true)){
-
-			//setContentView(R.layout.weighttracker);
 			b = (Button)findViewById(R.id.bSetWeightTracker); 
 			current = (EditText)findViewById(R.id.etCurrentWeight);
 			goal = (EditText)findViewById(R.id.etGoalWeight);
 			height = (EditText)findViewById(R.id.etHeight);
-
 			tv = (TextView)findViewById(R.id.tvWeightReport);
-
 			b.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					CreateWeight task = new CreateWeight();
@@ -89,13 +79,14 @@ public class WeightTracker extends Activity implements OnClickListener{
 					task.execute(pass);
 					SharedPreferences.Editor editor = prefs.edit();
 					editor.putBoolean("weightFirstTime", false);
+					editor.putString("goalWeight", goal.getText().toString());
 					editor.commit();
 				}
 			});
 		}else{
 			setContentView(R.layout.weightresults);
 			b = (Button)findViewById(R.id.bWeightResultsGo);
-			tv = (TextView)findViewById(R.id.tvWeightReport);
+			tv2 = (TextView)findViewById(R.id.tvDisplayWeight);
 			b.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v){
 					GetWeight task = new GetWeight();

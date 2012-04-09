@@ -21,8 +21,11 @@ public class SearchXMLHandler extends DefaultHandler{
 	SearchData info = new SearchData();
 	boolean foodname = false;
 	boolean fooddescription = false;
+	boolean foodId = false;
+	String[] foodIDS = new String[5];
 	String[] foodNames = new String[5];
 	String[] foodDescriptions = new String[5];
+	int h = 0;
 	int i = 0;
 	int j = 0;
 	
@@ -31,6 +34,9 @@ public class SearchXMLHandler extends DefaultHandler{
 			Attributes attributes) throws SAXException {
 		// TODO Auto-generated method stub
 		//System.out.println("Start element: " + qName);
+		if (qName.equalsIgnoreCase("food_id")){
+			foodId = true;
+		}
 		if (qName.equalsIgnoreCase("food_name")){
 			foodname = true;
 		}
@@ -42,6 +48,12 @@ public class SearchXMLHandler extends DefaultHandler{
 	@Override
 	public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
 		// TODO Auto-generated method stub
+		if (foodId){
+			String ID = new String(arg0, arg1, arg2);
+			info.setFoodID(ID, h);
+			foodId = false;
+			h++;
+			}
 		if (foodname){
 			String foodName = new String(arg0, arg1, arg2);
 			info.setFoodName(foodName, i);
@@ -55,14 +67,23 @@ public class SearchXMLHandler extends DefaultHandler{
 			j++;
 		}
 	}
+	
+	public String[] getFoodIDInformation(){
+		h=0;
+		i=0;
+		j=0;
+		return info.foodIDToString();
+	}
 
 	public String[] getFoodNameInformation(){
+		h=0;
 		i = 0;
 		j = 0;
 		return info.foodNameToString();
 	}
 
 	public String[] getFoodDescriptions(){
+		h=0;
 		j=0;
 		i=0;
 		return info.foodDescriptionsToString();
