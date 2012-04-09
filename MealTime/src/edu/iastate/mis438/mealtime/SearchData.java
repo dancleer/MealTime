@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SearchData {
 
-	int foodID = 0;
+	String foodID = null;
 	String foodName = null;
 	String foodType = null;
 	String foodDescription = null;
@@ -12,6 +12,7 @@ public class SearchData {
 	//ArrayList<String> foodDescriptions = new ArrayList<String>();
 	String[] foodNames = new String[5];
 	String[] foodDescriptions = new String[5];
+	String[] foodIDS = new String[5];
 	
 //	  <food>
 //	    <food_id>33689</food_id>
@@ -20,11 +21,11 @@ public class SearchData {
 //	    <food_url>http://www.fatsecret.com/calories-nutrition/usda/cheddar-cheese</food_url>
 //	    <food_description>Per 100g - Calories: 403kcal | Fat: 33.14g | Carbs: 1.28g | Protein: 24.90g</food_description>
 //	  </food>
-	public int getFoodID() {
+	public String getFoodID() {
 		return foodID;
 	}
-	public void setFoodID(int foodID) {
-		this.foodID = foodID;
+	public void setFoodID(String foodID, int index) {
+		foodIDS[index] = foodID;
 	}
 	public String getFoodName() {
 		return foodName;
@@ -43,6 +44,13 @@ public class SearchData {
 	}
 	public void setFoodDescription(String foodDescription, int index) {
 		foodDescriptions[index] = foodDescription;
+	}
+	public String[] foodIDToString(){
+		String[] ret = new String[foodIDS.length];
+		for(int i = 0; i < foodIDS.length; i++){
+			ret[i] = foodIDS[i];
+		}
+		return ret;
 	}
 	public String[] foodNameToString(){
 		String[] ret = new String[foodNames.length];

@@ -51,6 +51,7 @@ public class Search extends Activity implements OnClickListener{
 	ArrayAdapter<String> aa;
 	ArrayList<String> resultsList = new ArrayList<String>();
 	ArrayList<String> descList = new ArrayList<String>();
+	ArrayList<String> foodIDsList = new ArrayList<String>();
 
 	private static String key = "9a6ae1fceea24f2894fba9311bfe20db";
 	private static String secret = "549aeee4d7ec46198bd88e89986b38a1";
@@ -123,9 +124,15 @@ public class Search extends Activity implements OnClickListener{
 				if(pn > 0){
 					op = pn * 5;
 				}
+				String foodID = foodIDsList.get(op);
+				
 				String foodName = resultsList.get(op);
 				String foodDescription = descList.get(op);
+
 				Bundle b = new Bundle();
+				
+				b.putString("FoodID", foodID);
+				
 				b.putString("Food: ", foodName);
 				b.putString("Desc", foodDescription);
 				Intent tent = new Intent(Search.this, SearchDetails.class);
@@ -142,9 +149,16 @@ public class Search extends Activity implements OnClickListener{
 				if(pn > 0){
 					op = (pn * 5) + 1;
 				}
+				String foodID = foodIDsList.get(op);
+				
 				String foodName = resultsList.get(op);
 				String foodDescription = descList.get(op);
+//				String foodID = foodIDsList.get(op);
+
 				Bundle b = new Bundle();
+				
+				b.putString("FoodID", foodID);
+				
 				b.putString("Food: ", foodName);
 				b.putString("Desc", foodDescription);
 				Intent tent = new Intent(Search.this, SearchDetails.class);
@@ -161,9 +175,16 @@ public class Search extends Activity implements OnClickListener{
 				if(pn > 0){
 					op = (pn * 5) + 2;
 				}
+				String foodID = foodIDsList.get(op);
+				
 				String foodName = resultsList.get(op);
 				String foodDescription = descList.get(op);
+//				String foodID = foodIDsList.get(op);
+
 				Bundle b = new Bundle();
+				
+				b.putString("FoodID", foodID);
+				
 				b.putString("Food: ", foodName);
 				b.putString("Desc", foodDescription);
 				Intent tent = new Intent(Search.this, SearchDetails.class);
@@ -180,9 +201,16 @@ public class Search extends Activity implements OnClickListener{
 				if(pn > 0){
 					op = (pn * 5) + 3;
 				}
+				String foodID = foodIDsList.get(op);
+				
 				String foodName = resultsList.get(op);
 				String foodDescription = descList.get(op);
+//				String foodID = foodIDsList.get(op);
+
 				Bundle b = new Bundle();
+				
+				b.putString("FoodID", foodID);
+				
 				b.putString("Food: ", foodName);
 				b.putString("Desc", foodDescription);
 				Intent tent = new Intent(Search.this, SearchDetails.class);
@@ -199,11 +227,19 @@ public class Search extends Activity implements OnClickListener{
 				if(pn > 0){
 					op = (pn * 5) + 4;
 				}
+				String foodID = foodIDsList.get(op);
+				
 				String foodName = resultsList.get(op);
 				String foodDescription = descList.get(op);
+//				String foodID = foodIDsList.get(op);
+
 				Bundle b = new Bundle();
+				
+				b.putString("FoodID", foodID);
+				
 				b.putString("Food: ", foodName);
 				b.putString("Desc", foodDescription);
+				
 				Intent tent = new Intent(Search.this, SearchDetails.class);
 				tent.putExtras(b);
 				startActivity(tent);
@@ -260,15 +296,21 @@ public class Search extends Activity implements OnClickListener{
 					SearchXMLHandler handler = new SearchXMLHandler();
 					xr.setContentHandler(handler);
 					xr.parse(new InputSource(website.openStream()));
+					
+					String[] foodIDs = handler.getFoodIDInformation();
+					
 					String[] information = handler.getFoodNameInformation();
 					String[] descriptions = handler.getFoodDescriptions();
+
 					for(int i = 0; i < information.length; i++){
+						foodIDsList.add(foodIDs[i]);
+						
 						resultsList.add(information[i]);
 						descList.add(descriptions[i]);
 					}
 					return information;
 				}catch (Exception e){
-					tv.setText("error");
+					e.printStackTrace();
 				}
 	
 				return null;
